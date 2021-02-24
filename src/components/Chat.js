@@ -2,29 +2,57 @@ import React from 'react';
 import styled from 'styled-components';
 import { StarBorderOutlined } from '@material-ui/icons';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { useSelector } from 'react-redux';
+import { selectRoomId } from '../features/appSlice';
+import ChatInput from './ChatInput';
+import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
+import { db } from '../firebase';
 
 function Chat() {
+    const roomId = useSelector(selectRoomId);
+    const [roomDetails] = useDocument(
+        roomId && db.collection('rooms').doc(roomId)
+    );
+    const [roomMessages] = useCollection(
+        roomId &&
+            db
+                .collection('rooms')
+                .doc(roomId)
+                .collection('messages')
+                .orderBy('timestamp', 'asc')
+    );
+
     return (
         <ChatContainer>
-            <Header>
-                <HeaderLeft>
-                    <h4>
-                        <strong>#Room Name</strong>
-                        <StarBorderOutlined />
-                    </h4>
-                </HeaderLeft>
-                <HeaderRight>
-                    <p>
-                        <InfoOutlinedIcon />
-                        Details
-                    </p>
-                </HeaderRight>
-            </Header>
+            {/* this <> is a react fragment */}
+            <>
+                <Header>
+                    <HeaderLeft>
+                        <h4>
+                            <strong>{roomDetails?.data().name}</strong>
+                            <StarBorderOutlined />
+                        </h4>
+                    </HeaderLeft>
+                    <HeaderRight>
+                        <p>
+                            <InfoOutlinedIcon />
+                            Details
+                        </p>
+                    </HeaderRight>
+                </Header>
+                <ChatMessages></ChatMessages>
+                <ChatInput
+                    channelName={roomDetails?.data().name}
+                    channelId={roomId}
+                ></ChatInput>
+            </>
         </ChatContainer>
     );
 }
 
 export default Chat;
+
+const ChatMessages = styled.div``;
 
 const Header = styled.div`
     display: flex;
