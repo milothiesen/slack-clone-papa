@@ -18,7 +18,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 // define the auth
 const auth = firebase.auth();
-firebase.auth().useDeviceLanguage();
+// firebase.auth().useDeviceLanguage();
 
 // add google auth
 const provider = new firebase.auth.GoogleAuthProvider();

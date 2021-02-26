@@ -32,49 +32,50 @@ function Chat() {
 
     return (
         <ChatContainer>
-            {/* this <> is a react fragment */}
-            <>
-                <Header>
-                    <HeaderLeft>
-                        <h4>
-                            <strong>{roomDetails?.data().name}</strong>
-                            <StarBorderOutlined />
-                        </h4>
-                    </HeaderLeft>
-                    <HeaderRight>
-                        <p>
-                            <InfoOutlinedIcon />
-                            Details
-                        </p>
-                    </HeaderRight>
-                </Header>
-                <ChatMessages>
-                    {roomMessages?.docs.map((doc) => {
-                        const {
-                            message,
-                            timestamp,
-                            user,
-                            userImage,
-                        } = doc.data();
+            {roomMessages && roomDetails && (
+                <>
+                    <Header>
+                        <HeaderLeft>
+                            <h4>
+                                <strong>{roomDetails?.data().name}</strong>
+                                <StarBorderOutlined />
+                            </h4>
+                        </HeaderLeft>
+                        <HeaderRight>
+                            <p>
+                                <InfoOutlinedIcon />
+                                Details
+                            </p>
+                        </HeaderRight>
+                    </Header>
+                    <ChatMessages>
+                        {roomMessages?.docs.map((doc) => {
+                            const {
+                                message,
+                                timestamp,
+                                user,
+                                userImage,
+                            } = doc.data();
 
-                        return (
-                            <Message
-                                key={doc.id}
-                                message={message}
-                                timestamp={timestamp}
-                                user={user}
-                                userImage={userImage}
-                            ></Message>
-                        );
-                    })}
-                    <ChatBottom ref={chatRef} />
-                </ChatMessages>
-                <ChatInput
-                    channelName={roomDetails?.data().name}
-                    channelId={roomId}
-                    chatRef={chatRef}
-                ></ChatInput>
-            </>
+                            return (
+                                <Message
+                                    key={doc.id}
+                                    message={message}
+                                    timestamp={timestamp}
+                                    user={user}
+                                    userImage={userImage}
+                                ></Message>
+                            );
+                        })}
+                        <ChatBottom ref={chatRef} />
+                    </ChatMessages>
+                    <ChatInput
+                        channelName={roomDetails?.data().name}
+                        channelId={roomId}
+                        chatRef={chatRef}
+                    />
+                </>
+            )}
         </ChatContainer>
     );
 }
