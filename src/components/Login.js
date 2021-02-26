@@ -15,8 +15,8 @@ function Login() {
                     src='https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd-970-80.jpg.webp'
                     alt='slack logo'
                 />
-                <h1>Sign in to the PAPA Fam</h1>
-                <p>papa.slack.com</p>
+                <h1>Sign into Milochat</h1>
+                <p>milochat.com</p>
 
                 <Button onClick={signIn}>Sign in with Google</Button>
             </LoginInnerContainer>

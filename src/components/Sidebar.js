@@ -14,18 +14,21 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Sidebar() {
     const [channels, loading, error] = useCollection(db.collection('rooms'));
+    const [user] = useAuthState(auth);
+
     return (
         <SidebarContainer>
             <SidebarHeader>
                 <SidebarInfo>
-                    <h2>SLACK</h2>
+                    <h2>MILOCHAT.COM</h2>
                     <h3>
                         <FiberManualRecordIcon />
-                        Milo Thiesen
+                        {user?.displayName}
                     </h3>
                 </SidebarInfo>
                 <CreateIcon />
